@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TFF - Eduardo Robles Espinosa</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div id="login-screen">
+        <div class="login-container">
+            <img src="token_logo.png" alt="Token Logo" class="login-logo">
+            <h1>Eduardo Robles Espinosa</h1>
+            <h2>Tokens de Fidelidad de Fan</h2>
+            <p>Inicia sesión para empezar a ganar tokens y canjear recompensas.</p>
+            <div class="login-buttons">
+                <button class="btn-login google" data-provider="Google"><i class="fab fa-google"></i> Continuar con Google</button>
+                <button class="btn-login facebook" data-provider="Facebook"><i class="fab fa-facebook"></i> Continuar con Facebook</button>
+                <button class="btn-login apple" data-provider="Apple"><i class="fab fa-apple"></i> Continuar con Apple</button>
+            </div>
+            <div class="admin-login-link-container">
+                <a href="#" id="admin-login-link">Admin Login</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-login-screen" class="hidden">
+        <div class="login-container">
+            <img src="token_logo.png" alt="Token Logo" class="login-logo">
+            <h1>Panel de Administración</h1>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" required>
+                </div>
+                <p id="admin-login-error" class="error-message hidden">Usuario o contraseña incorrectos.</p>
+                <button type="submit" class="btn">Ingresar</button>
+            </form>
+            <div class="admin-login-link-container">
+                <a href="#" id="back-to-user-login">← Volver al login de fans</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-dashboard" class="container hidden">
+         <header>
+            <div class="header-top">
+                <div id="admin-user-display">
+                    <span>Modo Administrador</span>
+                </div>
+                <button id="admin-logout-btn" class="btn btn-secondary">Salir</button>
+            </div>
+            <h1>Registro de Usuarios TFF</h1>
+        </header>
+        <main>
+             <section>
+                <table id="user-list-table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Proveedor</th>
+                            <th>Balance TFF</th>
+                            <th>Canciones Escuchadas</th>
+                            <th>Recompensas</th>
+                            <th>Fecha de Registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-list-tbody">
+                        <!-- User data will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <div id="dashboard" class="container hidden">
+        <header>
+            <div class="header-top">
+                <div id="user-display">
+                    <span id="user-name"></span>
+                </div>
+                <button id="logout-btn" class="btn btn-secondary">Salir</button>
+            </div>
+            <img src="artist_photo.png" alt="Foto de Eduardo Robles Espinosa" class="artist-photo">
+            <h1>Eduardo Robles Espinosa</h1>
+            <h2>Tokens de Fidelidad de Fan (TFF)</h2>
+        </header>
+
+        <main>
+            <section id="wallet">
+                <div class="wallet-info">
+                    <h3>Mis Tokens</h3>
+                    <div class="balance">
+                        <img src="token_logo.png" alt="Token Logo" class="token-logo">
+                        <span id="token-balance">0</span>
+                        <span>TFF</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="earn-section" class="grid-section">
+                <h2>Gana Tokens</h2>
+                <div class="card-grid">
+                    <div class="card earn-card" data-action="listen">
+                        <h3>Escuchar en Spotify</h3>
+                        <div id="spotify-disconnected">
+                            <p>+5 TFF por canción</p>
+                            <button class="btn" id="spotify-connect-btn">Conectar con Spotify</button>
+                        </div>
+                        <div id="spotify-connected" class="hidden">
+                            <div id="spotify-player-info">
+                                <p>Reproduce una canción en Spotify para ganar tokens.</p>
+                                <div id="spotify-current-track" class="hidden">
+                                    <strong>Ahora suena:</strong>
+                                    <span id="spotify-track-name"></span>
+                                    <em id="spotify-artist-name"></em>
+                                </div>
+                            </div>
+                            <p class="spotify-status">Conectado <i class="fas fa-check-circle"></i></p>
+                        </div>
+                    </div>
+                    <div class="card earn-card" data-action="share">
+                        <h3>Compartir en Redes</h3>
+                        <p>+25 TFF por compartir</p>
+                        <button class="btn" id="share-btn">Compartir ahora</button>
+                    </div>
+                    <div class="card earn-card" data-action="follow">
+                        <h3>Seguir en Instagram</h3>
+                        <p>+50 TFF</p>
+                        <button class="btn" data-amount="50" id="follow-btn">Lo seguí</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="rewards-section" class="grid-section">
+                <h2>Recompensas</h2>
+                <div class="card-grid">
+                    <div class="card reward-card" data-reward="photo">
+                        <img src="reward_photo.png" alt="Foto exclusiva" class="reward-image">
+                        <h3>Foto Exclusiva</h3>
+                        <p class="cost">Costo: 100 TFF</p>
+                        <p class="reward-status" id="photo-reward-status">0/20 Desbloqueadas</p>
+                        <button class="btn btn-secondary" data-cost="100">Obtener Foto</button>
+                    </div>
+                    <div class="card reward-card" data-reward="shoutout">
+                        <img src="reward_shoutout.png" alt="Saludo personalizado" class="reward-image">
+                        <h3>Saludo Personalizado</h3>
+                        <p class="cost">Costo: 500 TFF</p>
+                        <button class="btn btn-secondary" data-cost="500">Canjear</button>
+                    </div>
+                    <div class="card reward-card" data-reward="merch">
+                        <img src="reward_merch.png" alt="Descuento en Merch" class="reward-image">
+                        <h3>15% Descuento Merch</h3>
+                        <p class="cost">Costo: 1000 TFF</p>
+                        <button class="btn btn-secondary" data-cost="1000">Canjear</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gallery-section" class="grid-section hidden">
+                <h2>Mi Galería de Fotos Exclusivas</h2>
+                <div id="photo-gallery" class="photo-grid">
+                    <!-- Unlocked photo thumbnails will be inserted here -->
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2024 Eduardo Robles Espinosa. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <div id="share-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-btn">&times;</button>
+            <h2>Comparte la música</h2>
+            <p>¡Gracias por compartir! Has ganado 25 TFF. Usa los botones de abajo para compartir en tus redes.</p>
+            <div class="share-links">
+                <a href="#" id="twitter-share-link" class="share-link twitter" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#" id="facebook-share-link" class="share-link facebook" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#" id="whatsapp-share-link" class="share-link whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="photo-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-btn">&times;</button>
+            <h2>¡Foto Exclusiva Desbloqueada!</h2>
+            <p>Has añadido una nueva foto a tu colección. ¡Sigue apoyando para conseguirlas todas!</p>
+            <img id="unlocked-photo" src="" alt="Foto Exclusiva" class="unlocked-photo-image">
+            <a id="download-photo-btn" class="btn" href="" download>Descargar Foto</a>
+        </div>
+    </div>
+
+    <div id="name-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>¡Bienvenido/a!</h2>
+            <p>Para crear tu cuenta de fan, por favor dinos tu nombre.</p>
+            <form id="name-form">
+                <div class="form-group">
+                    <label for="fan-name">Tu Nombre</label>
+                    <input type="text" id="fan-name" placeholder="Ej: Alex" required>
+                </div>
+                <button type="submit" class="btn">Continuar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="shoutout-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-btn">&times;</button>
+            <h2>¡Saludo Personalizado Canjeado!</h2>
+            <p>Introduce el nombre para el que quieres el saludo. Eduardo lo grabará y te lo enviaremos pronto.</p>
+            <form id="shoutout-form">
+                <div class="form-group">
+                    <label for="shoutout-name">Nombre para el saludo</label>
+                    <input type="text" id="shoutout-name" placeholder="Ej: Para mi amiga María" required>
+                </div>
+                <button type="submit" class="btn">Confirmar Nombre</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="merch-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-btn">&times;</button>
+            <h2>¡Descuento Desbloqueado!</h2>
+            <p>Usa el siguiente código en la tienda oficial para obtener un 15% de descuento en tu próxima compra.</p>
+            <div class="discount-code-container">
+                <span id="merch-code"></span>
+                <button id="copy-code-btn" class="btn btn-secondary"><i class="fas fa-copy"></i> Copiar</button>
+            </div>
+            <p class="code-info">Código guardado en tu perfil. Válido por 30 días.</p>
+            <a href="#" class="btn" target="_blank">Ir a la Tienda</a>
+        </div>
+    </div>
+
+    <div id="edit-user-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-btn">&times;</button>
+            <h2>Editar Usuario</h2>
+            <form id="edit-user-form">
+                <input type="hidden" id="edit-user-id">
+                <div class="form-group">
+                    <label for="edit-fan-name">Nombre de Usuario</label>
+                    <input type="text" id="edit-fan-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-tff-balance">Balance TFF</label>
+                    <input type="number" id="edit-tff-balance" required min="0">
+                </div>
+                <button type="submit" class="btn">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="delete-confirm-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-btn">&times;</button>
+            <h2>Confirmar Eliminación</h2>
+            <p>¿Estás seguro de que quieres eliminar a este usuario? Esta acción no se puede deshacer.</p>
+            <div class="confirm-buttons">
+                <button id="cancel-delete-btn" class="btn btn-secondary">Cancelar</button>
+                <button id="confirm-delete-btn" class="btn btn-danger">Eliminar Usuario</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
