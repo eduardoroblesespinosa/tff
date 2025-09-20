@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Spotify API Configuration
     // IMPORTANT: Replace with your own Spotify Client ID.
     // Go to https://developer.spotify.com/dashboard/ to create an app.
-    const SPOTIFY_CLIENT_ID = 'YOUR_SPOTIFY_CLIENT_ID'; 
+    const SPOTIFY_CLIENT_ID = '713bd98356784f1ab7adc04e7ed84c08'; 
     const SPOTIFY_REDIRECT_URI = window.location.origin + window.location.pathname;
     const SPOTIFY_SCOPES = 'user-read-playback-state user-read-currently-playing';
 
